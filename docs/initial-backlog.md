@@ -16,6 +16,7 @@
 - [ ] Create Nuxt 4 project for storefront with Tailwind configured and design tokens applied.
 - [ ] Integrate Storybook 8 for shared UI components and publish base typography/color components.
 - [ ] Implement CI jobs for PHPStan and Vitest/Jest (if applicable) with baseline tests.
+- [ ] Introduce RBAC module with `spatie/laravel-permission`, seed initial roles/permissions, expose `/auth/me` with role payload.
 
 ### Sprint 2 – Catalog MVP
 - [ ] Implement product domain services (CRUD, variants, pricing) with REST endpoints and resource transformers.
@@ -24,6 +25,7 @@
 - [ ] Develop storefront product listing pages (home featured, category grid, product detail) consuming API.
 - [ ] Create back office catalog screens with data grids, filtering, and inline edits.
 - [ ] Add PHPUnit/Pest feature tests for catalog flows and Playwright E2E smoke tests.
+- [ ] Enforce role-based access in Nuxt (navigation guards, directives) and protect back office routes/actions per permission matrix.
 
 ### Sprint 3 – Cart & Checkout MVP
 - [ ] Design cart service (session-based & authenticated carts) with merge logic on login.
