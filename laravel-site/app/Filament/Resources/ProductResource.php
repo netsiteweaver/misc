@@ -59,7 +59,7 @@ class ProductResource extends Resource
                     ->required()
                     ->default(true),
                 Forms\Components\TextInput::make('price_cents')
-                    ->label('Price (cents)')
+                    ->label('Price')
                     ->numeric()
                     ->minValue(0)
                     ->visible(fn (Forms\Get $get) => ! (bool) $get('is_quote_only')),
@@ -99,6 +99,7 @@ class ProductResource extends Resource
                 Tables\Columns\IconColumn::make('is_quote_only')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('price_cents')
+                    ->label('Price')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
