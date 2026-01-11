@@ -17,6 +17,7 @@ class DemoCatalogSeeder extends Seeder
     public function run(): void
     {
         $this->seedImages();
+        $currency = (string) config('site.currency', 'MUR');
 
         $categories = collect([
             ['name' => 'Brakes', 'description' => 'Pads, rotors, calipers, sensors, brake fluid.', 'image' => 'sample/categories/brakes.svg'],
@@ -180,7 +181,7 @@ class DemoCatalogSeeder extends Seeder
                     'is_active' => true,
                     'is_quote_only' => true,
                     'price_cents' => null,
-                    'currency' => 'USD',
+                    'currency' => $currency,
                     'sort_order' => $i,
                 ],
             );

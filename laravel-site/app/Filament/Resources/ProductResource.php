@@ -65,7 +65,7 @@ class ProductResource extends Resource
                     ->visible(fn (Forms\Get $get) => ! (bool) $get('is_quote_only')),
                 Forms\Components\TextInput::make('currency')
                     ->required()
-                    ->default('USD')
+                    ->default(config('site.currency', 'MUR'))
                     ->maxLength(3)
                     ->visible(fn (Forms\Get $get) => ! (bool) $get('is_quote_only')),
                 Forms\Components\TextInput::make('sort_order')
