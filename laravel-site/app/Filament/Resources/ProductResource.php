@@ -101,11 +101,6 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('price_cents')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('currency')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('sort_order')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
