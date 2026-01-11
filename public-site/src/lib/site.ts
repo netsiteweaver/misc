@@ -2,6 +2,7 @@ export type SiteConfig = {
   name: string;
   tagline: string;
   facebookUrl: string;
+  accentColorHex?: string;
   phone?: string;
   email?: string;
   address?: string;
@@ -12,6 +13,7 @@ export const site: SiteConfig = {
   name: "Car Parts Shop",
   tagline: "Quality car parts. Fast sourcing. Honest pricing.",
   facebookUrl: "https://www.facebook.com/profile.php?id=100068333531889",
+  accentColorHex: "#ef4444",
   // Optional (fill these in when you have them)
   phone: "",
   email: "",

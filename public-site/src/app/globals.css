@@ -3,6 +3,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --accent: #ef4444;
 }
 
 @theme inline {
@@ -28,4 +29,9 @@ body {
 
 ::selection {
   background: rgba(24, 24, 27, 0.18);
+}
+
+/* Small quality-of-life defaults */
+a {
+  text-underline-offset: 3px;
 }
