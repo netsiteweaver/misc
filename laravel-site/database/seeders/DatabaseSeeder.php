@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,13 +16,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Creates an admin user for local back office login.
-        // Default password from UserFactory is "password".
-        User::factory()->create([
-            'name' => 'Admin',
-            'email' => 'admin@example.com',
-            'is_admin' => true,
-        ]);
+        // Seed a predictable admin user for local back office login:
+        // email: admin@example.com
+        // password: password
+        User::query()->updateOrCreate(
+            ['email' => 'admin@example.com'],
+            [
+                'name' => 'Admin',
+                'password' => Hash::make('password'),
+                'is_admin' => true,
+            ],
+        );
 
         $this->call([
             DemoCatalogSeeder::class,
