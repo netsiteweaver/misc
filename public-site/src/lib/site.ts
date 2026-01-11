@@ -1,4 +1,14 @@
-export const site = {
+export type SiteConfig = {
+  name: string;
+  tagline: string;
+  facebookUrl: string;
+  phone?: string;
+  email?: string;
+  address?: string;
+  hours?: string;
+};
+
+export const site: SiteConfig = {
   name: "Car Parts Shop",
   tagline: "Quality car parts. Fast sourcing. Honest pricing.",
   facebookUrl: "https://www.facebook.com/profile.php?id=100068333531889",
@@ -7,7 +17,7 @@ export const site = {
   email: "",
   address: "",
   hours: "",
-} as const;
+};
 
 export type CatalogCategory = {
   title: string;

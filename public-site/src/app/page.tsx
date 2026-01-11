@@ -1,65 +1,100 @@
-import Image from "next/image";
+import { Button } from "@/components/Button";
+import { Container } from "@/components/Container";
+import { categories, site } from "@/lib/site";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+    <div>
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,rgba(24,24,27,0.08),transparent_55%)]" />
+        <Container className="py-14 sm:py-20">
+          <div className="max-w-2xl">
+            <div className="inline-flex items-center gap-2 rounded-full bg-zinc-100 px-3 py-1 text-xs font-semibold text-zinc-700">
+              Car parts sourcing · Retail & wholesale
+            </div>
+            <h1 className="mt-5 text-4xl font-semibold tracking-tight text-zinc-900 sm:text-5xl">
+              {site.name}
+            </h1>
+            <p className="mt-4 text-lg leading-8 text-zinc-600">
+              {site.tagline} Tell us your car model + part name (or send a photo),
+              and we’ll confirm availability and price.
+            </p>
+
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <Button href="/catalog">Browse categories</Button>
+              <Button href="/contact" variant="secondary">
+                Request a quote
+              </Button>
+              <Button href={site.facebookUrl} external variant="secondary">
+                Visit Facebook
+              </Button>
+            </div>
+
+            <div className="mt-10 grid gap-4 sm:grid-cols-3">
+              <div className="rounded-2xl border border-zinc-200 bg-white p-4">
+                <div className="text-sm font-semibold">Fast sourcing</div>
+                <div className="mt-1 text-sm text-zinc-600">
+                  OEM and quality aftermarket options.
+                </div>
+              </div>
+              <div className="rounded-2xl border border-zinc-200 bg-white p-4">
+                <div className="text-sm font-semibold">Right fit</div>
+                <div className="mt-1 text-sm text-zinc-600">
+                  We verify compatibility before you buy.
+                </div>
+              </div>
+              <div className="rounded-2xl border border-zinc-200 bg-white p-4">
+                <div className="text-sm font-semibold">Support</div>
+                <div className="mt-1 text-sm text-zinc-600">
+                  Friendly guidance for replacements and upgrades.
+                </div>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-t border-zinc-200 bg-zinc-50/60">
+        <Container className="py-12">
+          <div className="flex items-end justify-between gap-6">
+            <div>
+              <h2 className="text-2xl font-semibold tracking-tight">
+                Popular categories
+              </h2>
+              <p className="mt-2 text-sm text-zinc-600">
+                A quick starting point — if you don’t see it, just message us.
+              </p>
+            </div>
+            <div className="hidden sm:block">
+              <Button href="/catalog" variant="secondary">
+                View all
+              </Button>
+            </div>
+          </div>
+
+          <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {categories.slice(0, 6).map((c) => (
+              <div
+                key={c.title}
+                className="rounded-2xl border border-zinc-200 bg-white p-5"
+              >
+                <div className="text-base font-semibold">{c.title}</div>
+                <div className="mt-2 text-sm text-zinc-600">{c.description}</div>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {c.examples.slice(0, 3).map((e) => (
+                    <span
+                      key={e}
+                      className="rounded-full bg-zinc-100 px-2.5 py-1 text-xs font-medium text-zinc-700"
+                    >
+                      {e}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </section>
     </div>
   );
 }

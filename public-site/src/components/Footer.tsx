@@ -1,9 +1,8 @@
-"use client";
-
 import { Container } from "@/components/Container";
 import { site } from "@/lib/site";
 
 export function Footer() {
+  const year = new Date().getFullYear();
   return (
     <footer className="border-t border-zinc-200 bg-white">
       <Container className="py-10">
@@ -47,7 +46,7 @@ export function Footer() {
         </div>
 
         <div className="mt-8 border-t border-zinc-200 pt-6 text-xs text-zinc-500">
-          © {new Date().getFullYear()} {site.name}. All rights reserved.
+          © {year} {site.name}. All rights reserved.
         </div>
       </Container>
     </footer>
