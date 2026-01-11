@@ -23,6 +23,13 @@ class ProductResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\FileUpload::make('image_path')
+                    ->label('Image')
+                    ->disk('public')
+                    ->directory('products')
+                    ->image()
+                    ->imageEditor()
+                    ->columnSpanFull(),
                 Forms\Components\Select::make('category_id')
                     ->relationship('category', 'name')
                     ->required()
@@ -72,6 +79,10 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('image_path')
+                    ->label('')
+                    ->disk('public')
+                    ->square(),
                 Tables\Columns\TextColumn::make('category.name')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('brand.name')

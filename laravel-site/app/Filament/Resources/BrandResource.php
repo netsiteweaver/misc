@@ -23,6 +23,13 @@ class BrandResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\FileUpload::make('image_path')
+                    ->label('Logo')
+                    ->disk('public')
+                    ->directory('brands')
+                    ->image()
+                    ->imageEditor()
+                    ->columnSpanFull(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255)
@@ -41,6 +48,10 @@ class BrandResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('image_path')
+                    ->label('')
+                    ->disk('public')
+                    ->circular(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('slug')
