@@ -65,7 +65,8 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    // Use an IANA timezone name. For UTC+4 without DST, "Asia/Dubai" is a good default.
+    'timezone' => env('APP_TIMEZONE', 'Asia/Dubai'),
 
     /*
     |--------------------------------------------------------------------------
