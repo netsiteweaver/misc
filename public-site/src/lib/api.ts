@@ -22,7 +22,9 @@ export interface SiteSettings {
   address: string;
   hours: string;
   facebookUrl: string;
+  logoUrl?: string | null;
   accentColorHex: string;
+  faviconVersion?: number;
 }
 
 export interface QuoteRequestData {
@@ -67,7 +69,7 @@ export async function fetchCategories(): Promise<Category[]> {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
-    cache: 'no-store', // For Next.js server components
+    next: { revalidate: 60 }, // Revalidate every 60 seconds
   });
   
   return handleResponse<Category[]>(response);
@@ -79,7 +81,7 @@ export async function fetchSiteSettings(): Promise<SiteSettings> {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
-    cache: 'no-store', // For Next.js server components
+    next: { revalidate: 60 }, // Revalidate every 60 seconds
   });
   
   return handleResponse<SiteSettings>(response);

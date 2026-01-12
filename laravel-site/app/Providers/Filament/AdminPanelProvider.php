@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Models\SiteSettings;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -16,13 +17,29 @@ use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
-        return $panel
+        // Set brand logo and name from site settings if available
+        $logoUrl = null;
+        $companyName = null;
+        try {
+            $settings = SiteSettings::getSettings();
+            if ($settings->logo_path && Storage::disk('public')->exists($settings->logo_path)) {
+                $logoUrl = Storage::disk('public')->url($settings->logo_path);
+            }
+            if ($settings->name) {
+                $companyName = $settings->name;
+            }
+        } catch (\Exception $e) {
+            // If database is not available or settings don't exist, continue without logo/name
+        }
+
+        $panel = $panel
             ->default()
             ->id('admin')
             ->path('admin')
@@ -30,7 +47,17 @@ class AdminPanelProvider extends PanelProvider
             ->favicon(asset('favicon.png'))
             ->colors([
                 'primary' => Color::Red,
-            ])
+            ]);
+
+        if ($logoUrl) {
+            $panel->brandLogo($logoUrl);
+        }
+
+        if ($companyName) {
+            $panel->brandName($companyName);
+        }
+
+        return $panel
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([

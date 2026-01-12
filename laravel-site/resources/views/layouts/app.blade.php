@@ -13,9 +13,12 @@
         </title>
         <meta name="description" content="@yield('meta_description', config('site.tagline'))" />
 
-        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
-        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
-        <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+        @php
+            $faviconTimestamp = file_exists(public_path('favicon.png')) ? filemtime(public_path('favicon.png')) : time();
+        @endphp
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}?v={{ $faviconTimestamp }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}?v={{ $faviconTimestamp }}">
+        <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}?v={{ $faviconTimestamp }}">
 
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />

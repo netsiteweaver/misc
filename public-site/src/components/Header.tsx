@@ -36,9 +36,17 @@ export function Header({ site }: HeaderProps) {
 
       <Container className="flex h-16 items-center justify-between gap-4">
         <Link href="/" className="flex items-center gap-3 font-semibold">
-          <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-900 text-white">
-            <span className="text-sm">CP</span>
-          </span>
+          {site.logoUrl ? (
+            <img
+              src={site.logoUrl}
+              alt={site.name}
+              className="h-10 w-10 rounded-xl object-cover"
+            />
+          ) : (
+            <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-900 text-white">
+              <span className="text-sm">CP</span>
+            </span>
+          )}
           <div className="leading-tight">
             <div className="text-sm sm:text-base">{site.name}</div>
             <div className="hidden text-xs font-normal text-zinc-500 sm:block">

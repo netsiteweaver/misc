@@ -15,14 +15,22 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// Default metadata (will be overridden if API call fails)
-let defaultSite = {
+import type { SiteSettings } from "@/lib/api";
+
+// Default site settings (will be overridden if API call succeeds)
+const defaultSite: SiteSettings = {
   name: "Car Parts Shop",
   tagline: "Quality car parts. Fast sourcing. Honest pricing.",
+  phone: "",
+  email: "",
+  address: "",
+  hours: "",
+  facebookUrl: "",
+  accentColorHex: "#ef4444",
 };
 
 // Try to fetch site settings for metadata
-async function getSiteSettings() {
+async function getSiteSettings(): Promise<SiteSettings> {
   try {
     return await fetchSiteSettings();
   } catch (error) {
@@ -33,6 +41,8 @@ async function getSiteSettings() {
 
 export async function generateMetadata(): Promise<Metadata> {
   const site = await getSiteSettings();
+  const faviconVersion = site.faviconVersion || Date.now();
+  const iconUrl = `/icon?v=${faviconVersion}`;
   
   return {
     title: {
@@ -41,9 +51,9 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     description: site.tagline,
     icons: {
-      icon: '/favicon.ico',
-      shortcut: '/favicon.ico',
-      apple: '/favicon.ico',
+      icon: iconUrl,
+      shortcut: iconUrl,
+      apple: iconUrl,
     },
   };
 }

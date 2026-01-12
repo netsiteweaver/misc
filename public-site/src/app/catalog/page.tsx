@@ -1,6 +1,6 @@
 import { Button } from "@/components/Button";
 import { Container } from "@/components/Container";
-import { fetchCategories, fetchSiteSettings } from "@/lib/api";
+import { fetchCategories, fetchSiteSettings, type Category, type SiteSettings } from "@/lib/api";
 
 export const metadata = {
   title: "Catalog",
@@ -8,9 +8,16 @@ export const metadata = {
 };
 
 export default async function CatalogPage() {
-  let categories = [];
-  let site = {
+  let categories: Category[] = [];
+  let site: SiteSettings = {
+    name: "",
+    tagline: "",
+    phone: "",
+    email: "",
+    address: "",
+    hours: "",
     facebookUrl: "https://www.facebook.com/profile.php?id=100068333531889",
+    accentColorHex: "#ef4444",
   };
 
   try {

@@ -1,0 +1,3 @@
+DB_DATABASE=klaxon_db
+DB_USERNAME=klaxon_user
+DB_PASSWORD=X4.TEBd;6(zU
