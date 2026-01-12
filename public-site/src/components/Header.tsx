@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Container } from "@/components/Container";
-import { site } from "@/lib/site";
+import { SiteSettings } from "@/lib/api";
 
 const nav = [
   { href: "/", label: "Home" },
@@ -9,7 +9,11 @@ const nav = [
   { href: "/contact", label: "Contact" },
 ] as const;
 
-export function Header() {
+interface HeaderProps {
+  site: SiteSettings;
+}
+
+export function Header({ site }: HeaderProps) {
   return (
     <header className="sticky top-0 z-50 border-b border-zinc-200/70 bg-white/80 backdrop-blur">
       <div className="hidden border-b border-zinc-200 bg-zinc-950 text-white sm:block">

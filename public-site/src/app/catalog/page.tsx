@@ -1,13 +1,27 @@
 import { Button } from "@/components/Button";
 import { Container } from "@/components/Container";
-import { categories, site } from "@/lib/site";
+import { fetchCategories, fetchSiteSettings } from "@/lib/api";
 
 export const metadata = {
   title: "Catalog",
   description: "Browse car parts categories and request a quote.",
 };
 
-export default function CatalogPage() {
+export default async function CatalogPage() {
+  let categories = [];
+  let site = {
+    facebookUrl: "https://www.facebook.com/profile.php?id=100068333531889",
+  };
+
+  try {
+    [categories, site] = await Promise.all([
+      fetchCategories(),
+      fetchSiteSettings(),
+    ]);
+  } catch (error) {
+    console.error("Failed to fetch data:", error);
+  }
+
   return (
     <Container className="py-10 sm:py-14">
       <div className="max-w-2xl">
@@ -29,7 +43,7 @@ export default function CatalogPage() {
       <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {categories.map((c) => (
           <div
-            key={c.title}
+            key={c.id}
             className="rounded-2xl border border-zinc-200 bg-white p-5"
           >
             <div className="text-base font-semibold">{c.title}</div>

@@ -1,7 +1,11 @@
 import { Container } from "@/components/Container";
-import { site } from "@/lib/site";
+import { SiteSettings } from "@/lib/api";
 
-export function Footer() {
+interface FooterProps {
+  site: SiteSettings;
+}
+
+export function Footer({ site }: FooterProps) {
   const year = new Date().getFullYear();
   return (
     <footer className="border-t border-zinc-200 bg-white">

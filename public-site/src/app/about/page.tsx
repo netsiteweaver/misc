@@ -1,13 +1,24 @@
 import { Button } from "@/components/Button";
 import { Container } from "@/components/Container";
-import { site } from "@/lib/site";
+import { fetchSiteSettings } from "@/lib/api";
 
 export const metadata = {
   title: "About",
   description: "Learn about our car parts shop and how we work.",
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  let site = {
+    name: "Car Parts Shop",
+    facebookUrl: "https://www.facebook.com/profile.php?id=100068333531889",
+  };
+
+  try {
+    site = await fetchSiteSettings();
+  } catch (error) {
+    console.error("Failed to fetch site settings:", error);
+  }
+
   return (
     <Container className="py-10 sm:py-14">
       <div className="max-w-2xl">
@@ -16,8 +27,8 @@ export default function AboutPage() {
         </h1>
         <p className="mt-4 text-zinc-600">
           We help drivers and mechanics find the right parts — quickly and at a
-          fair price. Whether you’re doing routine maintenance or a full repair,
-          we’ll guide you to the best option for your budget.
+          fair price. Whether you're doing routine maintenance or a full repair,
+          we'll guide you to the best option for your budget.
         </p>
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2">

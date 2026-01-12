@@ -1,8 +1,24 @@
 import { Button } from "@/components/Button";
 import { Container } from "@/components/Container";
-import { categories, site } from "@/lib/site";
+import { fetchCategories, fetchSiteSettings, Category } from "@/lib/api";
 
-export default function Home() {
+export default async function Home() {
+  let categories: Category[] = [];
+  let site = {
+    name: "Car Parts Shop",
+    tagline: "Quality car parts. Fast sourcing. Honest pricing.",
+    facebookUrl: "https://www.facebook.com/profile.php?id=100068333531889",
+  };
+
+  try {
+    [categories, site] = await Promise.all([
+      fetchCategories(),
+      fetchSiteSettings(),
+    ]);
+  } catch (error) {
+    console.error("Failed to fetch data:", error);
+  }
+
   return (
     <div>
       <section className="relative overflow-hidden">
@@ -17,7 +33,7 @@ export default function Home() {
             </h1>
             <p className="mt-4 text-lg leading-8 text-zinc-600">
               {site.tagline} Tell us your car model + part name (or send a photo),
-              and we’ll confirm availability and price.
+              and we'll confirm availability and price.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -62,7 +78,7 @@ export default function Home() {
                 Popular categories
               </h2>
               <p className="mt-2 text-sm text-zinc-600">
-                A quick starting point — if you don’t see it, just message us.
+                A quick starting point — if you don't see it, just message us.
               </p>
             </div>
             <div className="hidden sm:block">
@@ -75,7 +91,7 @@ export default function Home() {
           <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {categories.slice(0, 6).map((c) => (
               <div
-                key={c.title}
+                key={c.id}
                 className="rounded-2xl border border-zinc-200 bg-white p-5"
               >
                 <div className="text-base font-semibold">{c.title}</div>

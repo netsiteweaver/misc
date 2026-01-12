@@ -1,6 +1,7 @@
 import { Button } from "@/components/Button";
 import { Container } from "@/components/Container";
-import { site } from "@/lib/site";
+import { fetchSiteSettings } from "@/lib/api";
+import { QuoteRequestForm } from "@/components/QuoteRequestForm";
 
 export const metadata = {
   title: "Contact",
@@ -9,7 +10,7 @@ export const metadata = {
 
 function buildQuoteMessage() {
   return [
-    "Hi! I’d like a quote for a car part.",
+    "Hi! I'd like a quote for a car part.",
     "",
     "Car: (make/model/year)",
     "Engine: (optional)",
@@ -21,7 +22,18 @@ function buildQuoteMessage() {
   ].join("\n");
 }
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  let site = {
+    email: "",
+    facebookUrl: "https://www.facebook.com/profile.php?id=100068333531889",
+  };
+
+  try {
+    site = await fetchSiteSettings();
+  } catch (error) {
+    console.error("Failed to fetch site settings:", error);
+  }
+
   const message = buildQuoteMessage();
   const mailto =
     site.email && site.email.trim().length > 0
@@ -38,7 +50,7 @@ export default function ContactPage() {
         </h1>
         <p className="mt-3 text-zinc-600">
           The fastest way to get a quote is to message us on Facebook with your
-          car details and a photo of the old part.
+          car details and a photo of the old part. Or use the form below.
         </p>
 
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
@@ -49,11 +61,19 @@ export default function ContactPage() {
             <Button href={mailto} external variant="secondary">
               Email request
             </Button>
-          ) : (
-            <Button href={site.facebookUrl} external variant="secondary">
-              (Add email later)
-            </Button>
-          )}
+          ) : null}
+        </div>
+
+        <div className="mt-10 rounded-2xl border border-zinc-200 bg-white p-6">
+          <h2 className="text-lg font-semibold text-zinc-900">
+            Request a Quote
+          </h2>
+          <p className="mt-1 text-sm text-zinc-600">
+            Fill out the form below and we'll get back to you soon.
+          </p>
+          <div className="mt-6">
+            <QuoteRequestForm />
+          </div>
         </div>
 
         <div className="mt-10 rounded-2xl border border-zinc-200 bg-white p-5">
