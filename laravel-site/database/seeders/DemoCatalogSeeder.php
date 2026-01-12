@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -20,19 +21,23 @@ class DemoCatalogSeeder extends Seeder
         $currency = (string) config('site.currency', 'MUR');
 
         $categories = collect([
-            ['name' => 'Brakes', 'description' => 'Pads, rotors, calipers, sensors, brake fluid.', 'image' => 'sample/categories/brakes.svg'],
-            ['name' => 'Engine', 'description' => 'Filters, belts, plugs, mounts, service parts.', 'image' => 'sample/categories/engine.svg'],
-            ['name' => 'Suspension & Steering', 'description' => 'Shocks, struts, bushings, joints, tie rods.', 'image' => 'sample/categories/suspension.svg'],
-            ['name' => 'Electrical', 'description' => 'Batteries, alternators, starters, sensors, bulbs.', 'image' => 'sample/categories/electrical.svg'],
-            ['name' => 'Body & Lighting', 'description' => 'Mirrors, headlights, bumpers, fenders.', 'image' => 'sample/categories/body.svg'],
-            ['name' => 'Fluids & Service', 'description' => 'Oils, coolants, ATF, wipers, consumables.', 'image' => 'sample/categories/service.svg'],
+            ['name' => 'Brakes', 'description' => 'Pads, rotors, calipers, sensors, brake fluid.', 'image' => 'brakes'],
+            ['name' => 'Engine', 'description' => 'Filters, belts, plugs, mounts, service parts.', 'image' => 'engine'],
+            ['name' => 'Suspension & Steering', 'description' => 'Shocks, struts, bushings, joints, tie rods.', 'image' => 'suspension'],
+            ['name' => 'Electrical', 'description' => 'Batteries, alternators, starters, sensors, bulbs.', 'image' => 'electrical'],
+            ['name' => 'Body & Lighting', 'description' => 'Mirrors, headlights, bumpers, fenders.', 'image' => 'body'],
+            ['name' => 'Fluids & Service', 'description' => 'Oils, coolants, ATF, wipers, consumables.', 'image' => 'service'],
         ])->map(function (array $c, int $i) {
+            // Try to copy image from seeders/images/categories/ first, fallback to generated SVG
+            $imagePath = $this->copyImageIfExists($c['image'], 'categories') 
+                ?? "sample/categories/{$c['image']}.svg";
+            
             return Category::query()->updateOrCreate(
                 ['slug' => Str::slug($c['name'])],
                 [
                     'name' => $c['name'],
                     'description' => $c['description'],
-                    'image_path' => $c['image'],
+                    'image_path' => $imagePath,
                     'sort_order' => $i,
                     'is_active' => true,
                 ],
@@ -40,20 +45,24 @@ class DemoCatalogSeeder extends Seeder
         });
 
         $brands = collect([
-            ['name' => 'Bosch', 'image' => 'sample/brands/bosch.svg'],
-            ['name' => 'NGK', 'image' => 'sample/brands/ngk.svg'],
-            ['name' => 'Denso', 'image' => 'sample/brands/denso.svg'],
-            ['name' => 'Brembo', 'image' => 'sample/brands/brembo.svg'],
-            ['name' => 'KYB', 'image' => 'sample/brands/kyb.svg'],
-            ['name' => 'Valeo', 'image' => 'sample/brands/valeo.svg'],
-            ['name' => 'MANN-FILTER', 'image' => 'sample/brands/mann.svg'],
-            ['name' => 'Febi', 'image' => 'sample/brands/febi.svg'],
+            ['name' => 'Bosch', 'image' => 'bosch'],
+            ['name' => 'NGK', 'image' => 'ngk'],
+            ['name' => 'Denso', 'image' => 'denso'],
+            ['name' => 'Brembo', 'image' => 'brembo'],
+            ['name' => 'KYB', 'image' => 'kyb'],
+            ['name' => 'Valeo', 'image' => 'valeo'],
+            ['name' => 'MANN-FILTER', 'image' => 'mann'],
+            ['name' => 'Febi', 'image' => 'febi'],
         ])->map(function (array $b) {
+            // Try to copy image from seeders/images/brands/ first, fallback to generated SVG
+            $imagePath = $this->copyImageIfExists($b['image'], 'brands') 
+                ?? "sample/brands/{$b['image']}.svg";
+            
             return Brand::query()->updateOrCreate(
                 ['slug' => Str::slug($b['name'])],
                 [
                     'name' => $b['name'],
-                    'image_path' => $b['image'],
+                    'image_path' => $imagePath,
                     'is_active' => true,
                 ],
             );
@@ -68,7 +77,7 @@ class DemoCatalogSeeder extends Seeder
                 'category' => 'Brakes',
                 'brand' => 'Brembo',
                 'sku' => 'BRK-PAD-FRONT',
-                'image' => 'sample/products/brake-pads.svg',
+                'image' => 'brake-pads',
                 'description' => 'Front pads set. OEM and aftermarket options available.',
             ],
             [
@@ -76,7 +85,7 @@ class DemoCatalogSeeder extends Seeder
                 'category' => 'Brakes',
                 'brand' => 'Brembo',
                 'sku' => 'BRK-ROTOR-PAIR',
-                'image' => 'sample/products/rotors.svg',
+                'image' => 'rotors',
                 'description' => 'Pair of discs/rotors. Verify size with VIN or photo.',
             ],
             [
@@ -84,7 +93,7 @@ class DemoCatalogSeeder extends Seeder
                 'category' => 'Engine',
                 'brand' => 'MANN-FILTER',
                 'sku' => 'ENG-OIL-FLT',
-                'image' => 'sample/products/oil-filter.svg',
+                'image' => 'oil-filter',
                 'description' => 'Engine oil filter for multiple models.',
             ],
             [
@@ -92,7 +101,7 @@ class DemoCatalogSeeder extends Seeder
                 'category' => 'Engine',
                 'brand' => 'NGK',
                 'sku' => 'ENG-PLUG-SET',
-                'image' => 'sample/products/spark-plug.svg',
+                'image' => 'spark-plug',
                 'description' => 'Correct heat range matched to your engine.',
             ],
             [
@@ -100,7 +109,7 @@ class DemoCatalogSeeder extends Seeder
                 'category' => 'Suspension & Steering',
                 'brand' => 'KYB',
                 'sku' => 'SUS-SHOCK',
-                'image' => 'sample/products/shock.svg',
+                'image' => 'shock',
                 'description' => 'Front/rear options; left/right depending on model.',
             ],
             [
@@ -108,7 +117,7 @@ class DemoCatalogSeeder extends Seeder
                 'category' => 'Suspension & Steering',
                 'brand' => 'Febi',
                 'sku' => 'SUS-BALL-JOINT',
-                'image' => 'sample/products/ball-joint.svg',
+                'image' => 'ball-joint',
                 'description' => 'Suspension ball joint replacement.',
             ],
             [
@@ -116,7 +125,7 @@ class DemoCatalogSeeder extends Seeder
                 'category' => 'Electrical',
                 'brand' => 'Bosch',
                 'sku' => 'ELEC-BATT',
-                'image' => 'sample/products/battery.svg',
+                'image' => 'battery',
                 'description' => 'CCA and size matched to vehicle.',
             ],
             [
@@ -124,7 +133,7 @@ class DemoCatalogSeeder extends Seeder
                 'category' => 'Electrical',
                 'brand' => 'Denso',
                 'sku' => 'ELEC-ALT',
-                'image' => 'sample/products/alternator.svg',
+                'image' => 'alternator',
                 'description' => 'Charging system alternator (new or reman options).',
             ],
             [
@@ -132,7 +141,7 @@ class DemoCatalogSeeder extends Seeder
                 'category' => 'Body & Lighting',
                 'brand' => 'Valeo',
                 'sku' => 'BODY-HL-ASM',
-                'image' => 'sample/products/headlight.svg',
+                'image' => 'headlight',
                 'description' => 'Left/right available. Confirm model/year.',
             ],
             [
@@ -140,7 +149,7 @@ class DemoCatalogSeeder extends Seeder
                 'category' => 'Body & Lighting',
                 'brand' => 'Valeo',
                 'sku' => 'BODY-MIRROR',
-                'image' => 'sample/products/mirror.svg',
+                'image' => 'mirror',
                 'description' => 'Manual/electric variants depending on vehicle.',
             ],
             [
@@ -148,7 +157,7 @@ class DemoCatalogSeeder extends Seeder
                 'category' => 'Fluids & Service',
                 'brand' => 'Bosch',
                 'sku' => 'SRV-OIL-5W30',
-                'image' => 'sample/products/oil.svg',
+                'image' => 'oil',
                 'description' => 'Ask for recommended grade for your car.',
             ],
             [
@@ -156,7 +165,7 @@ class DemoCatalogSeeder extends Seeder
                 'category' => 'Fluids & Service',
                 'brand' => 'Bosch',
                 'sku' => 'SRV-WIPER-PAIR',
-                'image' => 'sample/products/wipers.svg',
+                'image' => 'wipers',
                 'description' => 'Size matched to your windshield.',
             ],
         ];
@@ -169,6 +178,10 @@ class DemoCatalogSeeder extends Seeder
                 continue;
             }
 
+            // Try to copy image from seeders/images/products/ first, fallback to generated SVG
+            $imagePath = $this->copyImageIfExists($p['image'], 'products') 
+                ?? "sample/products/{$p['image']}.svg";
+
             Product::query()->updateOrCreate(
                 ['slug' => Str::slug($p['name'])],
                 [
@@ -177,7 +190,7 @@ class DemoCatalogSeeder extends Seeder
                     'name' => $p['name'],
                     'sku' => $p['sku'],
                     'description' => $p['description'],
-                    'image_path' => $p['image'],
+                    'image_path' => $imagePath,
                     'is_active' => true,
                     'is_quote_only' => true,
                     'price_cents' => null,
@@ -193,7 +206,7 @@ class DemoCatalogSeeder extends Seeder
         $disk = Storage::disk('public');
 
         $files = [
-            // Categories
+            // Categories - only generate if seed images don't exist
             'sample/categories/brakes.svg' => $this->svgCard('Brakes', '#dc2626'),
             'sample/categories/engine.svg' => $this->svgCard('Engine', '#0f172a'),
             'sample/categories/suspension.svg' => $this->svgCard('Suspension', '#0ea5e9'),
@@ -201,7 +214,7 @@ class DemoCatalogSeeder extends Seeder
             'sample/categories/body.svg' => $this->svgCard('Body & Lighting', '#8b5cf6'),
             'sample/categories/service.svg' => $this->svgCard('Service', '#10b981'),
 
-            // Brands (logo-ish)
+            // Brands - only generate if seed images don't exist
             'sample/brands/bosch.svg' => $this->svgLogo('BOSCH', '#dc2626'),
             'sample/brands/ngk.svg' => $this->svgLogo('NGK', '#0f172a'),
             'sample/brands/denso.svg' => $this->svgLogo('DENSO', '#2563eb'),
@@ -231,6 +244,41 @@ class DemoCatalogSeeder extends Seeder
                 $disk->put($path, $contents);
             }
         }
+    }
+
+    /**
+     * Copy an image from seeders/images/{subdirectory}/{name}.* to storage/{subdirectory}/{name}.*
+     * 
+     * @param string $imageName The name of the image file (without extension)
+     * @param string $subdirectory The subdirectory in both seeders/images and storage
+     * @return string|null The storage path if copied, null otherwise
+     */
+    private function copyImageIfExists(string $imageName, string $subdirectory): ?string
+    {
+        $seedImagesPath = database_path("seeders/images/{$subdirectory}");
+        $publicDisk = Storage::disk('public');
+
+        // Look for common image extensions
+        $extensions = ['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg'];
+        
+        foreach ($extensions as $ext) {
+            $sourceFile = "{$seedImagesPath}/{$imageName}.{$ext}";
+            
+            if (File::exists($sourceFile)) {
+                $destinationPath = "{$subdirectory}/{$imageName}.{$ext}";
+                
+                // Ensure the directory exists in storage
+                $publicDisk->makeDirectory($subdirectory);
+                
+                // Copy the file
+                $contents = File::get($sourceFile);
+                $publicDisk->put($destinationPath, $contents);
+                
+                return $destinationPath;
+            }
+        }
+
+        return null;
     }
 
     private function svgCard(string $title, string $accentHex, string $subtitle = 'Category'): string

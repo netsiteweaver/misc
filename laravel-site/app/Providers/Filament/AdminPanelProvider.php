@@ -50,7 +50,8 @@ class AdminPanelProvider extends PanelProvider
             ]);
 
         if ($logoUrl) {
-            $panel->brandLogo($logoUrl);
+            $panel->brandLogo($logoUrl)
+                ->brandLogoHeight('100px');
         }
 
         if ($companyName) {

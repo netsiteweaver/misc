@@ -5,6 +5,9 @@
         ['href' => url('/about'), 'label' => 'About'],
         ['href' => url('/contact'), 'label' => 'Contact'],
     ];
+    
+    $settings = \App\Models\SiteSettings::getSettings();
+    $logoUrl = $settings->logo_path ? asset('storage/' . $settings->logo_path) : null;
 @endphp
 
 <header class="sticky top-0 z-50 border-b border-zinc-200/70 bg-white/80 backdrop-blur">
@@ -30,11 +33,19 @@
 
     <x-container class="flex h-16 items-center justify-between gap-4">
         <a href="{{ url('/') }}" class="flex items-center gap-3 font-semibold">
-            <span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-900 text-white">
-                <span class="text-sm">CP</span>
-            </span>
+            @if($logoUrl)
+                <img
+                    src="{{ $logoUrl }}"
+                    alt="{{ $settings->name }}"
+                    class="h-[100px] w-auto rounded-xl object-cover"
+                />
+            @else
+                <span class="inline-flex h-[100px] w-[100px] items-center justify-center rounded-xl bg-zinc-900 text-white">
+                    <span class="text-sm">CP</span>
+                </span>
+            @endif
             <div class="leading-tight">
-                <div class="text-sm sm:text-base">{{ config('site.name') }}</div>
+                <div class="text-sm sm:text-base">{{ $settings->name ?? config('site.name') }}</div>
                 <div class="hidden text-xs font-normal text-zinc-500 sm:block">
                     Car parts · Retail &amp; wholesale
                 </div>

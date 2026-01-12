@@ -40,10 +40,10 @@ export function Header({ site }: HeaderProps) {
             <img
               src={site.logoUrl}
               alt={site.name}
-              className="h-10 w-10 rounded-xl object-cover"
+              className="h-[100px] w-auto rounded-xl object-cover"
             />
           ) : (
-            <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-900 text-white">
+            <span className="inline-flex h-[100px] w-[100px] items-center justify-center rounded-xl bg-zinc-900 text-white">
               <span className="text-sm">CP</span>
             </span>
           )}

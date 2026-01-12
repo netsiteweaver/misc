@@ -16,10 +16,16 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('tagline')->nullable();
             $table->string('phone')->nullable();
+            $table->string('whatsapp_number')->nullable();
             $table->string('email')->nullable();
             $table->text('address')->nullable();
             $table->string('hours')->nullable();
             $table->string('facebook_url')->nullable();
+            $table->string('instagram_url')->nullable();
+            $table->string('youtube_url')->nullable();
+            $table->string('linkedin_url')->nullable();
+            $table->string('twitter_url')->nullable();
+            $table->string('tiktok_url')->nullable();
             $table->string('currency', 3)->default('MUR');
             $table->string('logo_path')->nullable();
             $table->timestamps();
