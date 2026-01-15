@@ -25,7 +25,7 @@ sales, and inventory.
 ### Inventory
 - Product catalog (SKU, barcode, form, strength, pack size).
 - Stock by location (store, shelf, bin) with transfers.
-- Batch/lot tracking and expiry management.
+- Batch/lot tracking and expiry management with FEFO picking.
 - Stock movements (purchase, sale, adjustment, transfer, return).
 - Reorder levels and low-stock alerts.
 - Stock valuation (FIFO/FEFO/weighted average).
@@ -40,8 +40,9 @@ sales, and inventory.
 | PurchaseOrder | Commitments to buy items from suppliers. |
 | GoodsReceipt | Actual items received (batch, expiry, cost). |
 | SalesInvoice | Items sold, price, taxes, discounts, payment status. |
+| Batch | Lot-level details (expiry, manufacturer, unit cost). |
 | StockMovement | Immutable ledger of inventory changes. |
-| StockBalance | Current on-hand quantity by product/location/batch. |
+| StockBalance | Current on-hand quantity by product/location/batch/expiry. |
 
 ## Key workflows
 
@@ -55,6 +56,7 @@ sales, and inventory.
 - Daily sales summary, gross margin, tax reports.
 - Purchase history by supplier and item.
 - Inventory aging and near-expiry report.
+- Expired stock quarantine and write-off report.
 - Fast/slow movers and out-of-stock analysis.
 - Audit log for all critical actions.
 
