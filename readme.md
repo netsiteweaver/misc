@@ -68,6 +68,13 @@ sales, and inventory.
 - Touch-first UI design (large tap targets, on-screen keypad, no keyboard).
 - Compliance with local pharmacy regulations and privacy rules.
 
+## Proposed tech stack
+
+- Web server: Apache.
+- Backend: PHP 8 with Laravel 12.
+- Database: MySQL.
+- Frontend: Vue.js.
+
 ## Next steps
 
 1. Confirm required workflows by region and regulation.
