@@ -65,6 +65,7 @@ sales, and inventory.
 - Role-based access control (pharmacist, cashier, manager, admin).
 - Backup and restore; data retention policy.
 - Performance: fast search by product name and barcode.
+- Touch-first UI design (large tap targets, on-screen keypad, no keyboard).
 - Compliance with local pharmacy regulations and privacy rules.
 
 ## Next steps
