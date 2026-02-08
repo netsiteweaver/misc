@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">SMS Relay</string>
+    <string name="instructions">Enter the server URL to pull messages, then tap Fetch &amp; Send.</string>
+    <string name="server_url_hint">Server URL (https://example.com/messages)</string>
+    <string name="api_token_hint">API token (optional)</string>
+    <string name="fetch_button">Fetch &amp; Send</string>
+    <string name="status_idle">Waiting for request.</string>
+</resources>
